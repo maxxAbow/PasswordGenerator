@@ -15,6 +15,18 @@
       <div class="card">
         <div class="card-header">
           <h2>Generate a Password</h2>
+        <div>
+          <input type="checkbox" id="upper">
+          <label for="Upper">Use Uppercase?</label><br>
+          <input type="checkbox" id="lower">
+          <label for="Lower">Use Lowercase?</label><br>
+          <input type="checkbox" id="number">
+          <label for="Number">Use Numbers?</label><br>
+          <input type="checkbox" id="symbol">
+          <label for="Symbol">Use special characters?</label><br>
+          <label for="length">Length</label>
+          <input id="length"><br>
+        </div>
         </div>
         <div class="card-body">
           <textarea
@@ -26,9 +38,10 @@
         </div>
         <div class="card-footer">
           <button id="generate" class="btn">Generate Password</button>
+          <button id="clipboard">Copy to Clipboard</button>
         </div>
       </div>
     </div>
-    <script src="script.js"></script>
+    <script src="test_script.js"></script>
   </body>
 </html>

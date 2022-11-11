@@ -1,11 +1,12 @@
 //Attempt without template
 //DOM elements
-var resultEl = document.getElementById('result');
+var password = document.getElementById('password');
 var lengthEl = document.getElementById('length');
 var upperEl = document.getElementById('upper');
 var lowerEl = document.getElementById('lower');
 var numberEl = document.getElementById('number');
 var symbolEl = document.getElementById('symbol');
+var generateEl = document.getElementById('generate');
 var clipboardEl = document.getElementById('clipboard');
 
 
@@ -17,21 +18,21 @@ Symb: generateSymbol
 };
 
 //Generate event listen
-generateEl.addEventListener('click'. () => {
+generateEl.addEventListener('click', () => {
  var length= +lengthEl.value;
  var LowerYN = lowerEl.checked;
  var UpperYN = upperEl.checked;
  var NumberYN = numberEl.checked;
  var SymbolYN = symbolEl.checked;
 
- resultsEl.innerText = generatePassword(length, LowerYN, UpperYN, NumberYN, SymbolYN);
+ password.innerText = generatePassword(length, LowerYN, UpperYN, NumberYN, SymbolYN);
 
 });
 
 //copy to clipboard
 clipboardEl.addEventListener('click', () => {
   var textarea = document.createElement('textarea');
-  var password = resultEl.innerText;
+  var password = password.innerText;
 
   if(!password){
     return;
@@ -62,7 +63,7 @@ function generatePassword (length, Lower, Upper, Number, Symbol) {
   }
   
   for(let i = 0; i < length; i += typesSelected){
-    typesArray.forEach(type {
+    typesArray.forEach(type => {
       var funcName = Object.keys(type)[0];
       
       generatedPassword += randomPW[funcName]();
