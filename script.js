@@ -12,7 +12,7 @@ var clipboardEl = document.getElementById('clipboard');
 var randomPW = {
 Upper: generateUpper,
 Lower: generateLower,
-Numb: generateNumber,
+Number: generateNumber,
 Symbol: generateSymbol
 };
 
