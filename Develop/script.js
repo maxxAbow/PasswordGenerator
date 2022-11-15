@@ -1,34 +1,86 @@
-// Assignment Code
-var generateBtn = document.querySelector("#generate");
+//Attempt without template
+//DOM elements
+var password = document.getElementById('password');
+var lengthEl = document.getElementById('length');
+var upperEl = document.getElementById('upper');
+var lowerEl = document.getElementById('lower');
+var numberEl = document.getElementById('number');
+var symbolEl = document.getElementById('symbol');
+var generateEl = document.getElementById('generate');
+var clipboardEl = document.getElementById('clipboard');
 
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword(function () {
-    
-  });
-  var passwordText = document.querySelector("#password");
-  
-  
 
-  passwordText.value = password;
+var randomPW = {
+Upper: generateUpper,
+Lower: generateLower,
+Numb: generateNumber,
+Symbol: generateSymbol
+};
+
+//Generate event listen
+generateEl.addEventListener('click', () => {
+ var length = +lengthEl.value;
+ var LowerYN = lowerEl.checked;
+ var UpperYN = upperEl.checked;
+ var NumberYN = numberEl.checked;
+ var SymbolYN = symbolEl.checked;
+
+ password.innerText = generatePassword(length, LowerYN, UpperYN, NumberYN, SymbolYN);
+
+});
+
+//Generate Password Function
+function generatePassword (length, Lower, Upper, Number, Symbol) {
+
+  let generatedPassword = '';
+  var typesSelected = Upper + Lower + Number + Symbol;
+  var typesArray = [{Upper}, {Lower}, {Number}, {Symbol}].filter(
+    item => Object.values(item)[0]
+  );
+  
+  if(typesSelected === 0){
+    return '';
+  }
+  
+  for(let i = 0; i < length; i += typesSelected){
+    typesArray.forEach(type => {
+      var funcName = Object.keys(type)[0];
+
+      generatedPassword += randomPW[funcName]();
+    });
+  }
+
+  var finalPassword = generatedPassword.slice(0, length);
+  return finalPassword;
 
 }
 
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+//Functions defined
+function generateLower() {
+  return String.fromCharCode(Math.floor(Math.random() *26) + 97);
+}
+
+function generateUpper() {
+  return String.fromCharCode(Math.floor(Math.random() *26) + 65);
+}
+
+function generateNumber() {
+  return String.fromCharCode(Math.floor(Math.random() *10) + 48);
+}
+function generateSymbol() {
+  var symbol = '=+-_)(*&^%$#@!~?/><';
+  return symbol[Math.floor(Math.random() * symbol.length)];
+}
+
 
 //copy to clipboard
 clipboardEl.addEventListener('click', () => {
-  var textarea = document.createElement('textarea');
-  var password = resultEl.innerText;
-
   if(!password){
     return;
   }
-  textarea.value = password;
-  document.body.appendChild('textarea');
-  textarea.select();
-  document.execCommand('copy');
-  textarea.remove();
-  alert('Password has been copied to your clipboard!')
-})
+  else{
+    navigator.clipboard.writeText(password.value).then(()=> {
+      alert('Password has been copied to clipboard!')
+    })
+  }
+});
