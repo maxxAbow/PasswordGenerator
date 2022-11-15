@@ -14,12 +14,12 @@ var randomPW = {
 Upper: generateUpper,
 Lower: generateLower,
 Numb: generateNumber,
-Symb: generateSymbol
+Symbol: generateSymbol
 };
 
 //Generate event listen
 generateEl.addEventListener('click', () => {
- var length= +lengthEl.value;
+ var length = +lengthEl.value;
  var LowerYN = lowerEl.checked;
  var UpperYN = upperEl.checked;
  var NumberYN = numberEl.checked;
@@ -29,28 +29,8 @@ generateEl.addEventListener('click', () => {
 
 });
 
-//copy to clipboard
-clipboardEl.addEventListener('click', () => {
-  var textarea = document.createElement('textarea');
-  var password = password.innerText;
-
-  if(!password){
-    return;
-  }
-  textarea.value = password;
-  document.body.appendChild('textarea');
-  textarea.select();
-  document.execCommand('copy');
-  textarea.remove();
-  alert('Password has been copied to your clipboard!')
-})
-
 //Generate Password Function
 function generatePassword (length, Lower, Upper, Number, Symbol) {
-  // 1. initialize password variable
-  // 2. filter out unchecked types
-  // 3. loop for length and call generator function for each type
-  // 4. add pw to pw var and return
 
   let generatedPassword = '';
   var typesSelected = Upper + Lower + Number + Symbol;
@@ -65,12 +45,12 @@ function generatePassword (length, Lower, Upper, Number, Symbol) {
   for(let i = 0; i < length; i += typesSelected){
     typesArray.forEach(type => {
       var funcName = Object.keys(type)[0];
-      
+
       generatedPassword += randomPW[funcName]();
     });
   }
 
-  finalPassword = generatedPassword.slice(0, length);
+  var finalPassword = generatedPassword.slice(0, length);
   return finalPassword;
 
 }
@@ -88,6 +68,50 @@ function generateNumber() {
   return String.fromCharCode(Math.floor(Math.random() *10) + 48);
 }
 function generateSymbol() {
-  const symbols = '=+-_)(*&^%$#@!~;?/>.<,'
-  return symbols[Math.floor(Math.random() * symbols.length)];
+  var symbol = '=+-_)(*&^%$#@!~?/><';
+  return symbol[Math.floor(Math.random() * symbol.length)];
 }
+
+
+
+//copy to clipboard
+// clipboardEl.addEventListener('click', () => {
+//   var textarea = document.createElement('textarea');
+//   var password = password.innerText;
+
+//   if(!password){
+//     return;
+//   }
+//   textarea.value = password;
+//   document.body.appendChild('textarea');
+//   //  navigator.clipboard.writeText(password.innerText);
+//   textarea.select();
+//   document.execCommand('copy');
+//   textarea.remove();
+//   alert('Password has been copied to your clipboard!')
+// })
+
+// let copyToClipboardButton = document.getElementById('clipboard');
+
+// copyToClipboardButton.addEventListener('click', () => [
+//   let textToCopy = document.getElementById('password').innerText;
+//   if(navigator.clipboard) {
+//     navigator.clipboard.writeText(textToCopy).then(() => {
+//       alert('Password has been copied to your clipboard!')
+//     })
+//   } else {
+//     console.log('Copy failed')
+//   }
+// ])
+
+//Wild times - solo attempt
+clipboardEl.addEventListener('click', () => {
+  if(!password){
+    return;
+  }
+  else{
+    navigator.clipboard.writeText(password.value).then(()=> {
+      alert('Password has been copied to clipboard!')
+    })
+  }
+});
