@@ -1,4 +1,3 @@
-//Attempt without template
 //DOM elements
 var password = document.getElementById('password');
 var lengthEl = document.getElementById('length');
